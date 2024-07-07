@@ -16,7 +16,6 @@
                     <input type="hidden" name="id" value="{{ $user->id }}">
                     <div class="mb-3">
                         <p class="lead text-danger"> {{ trans('dashboard.confirm_delete') }} {{ $user->name  }}</p>
-                    {{-- <label for="name" class="form-label">Name</label> --}}
                     </div>
                 </div>
                 <div class="modal-footer">

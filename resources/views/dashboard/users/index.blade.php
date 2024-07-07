@@ -46,21 +46,8 @@
                         </div>
 
                         <div class="card-body">
-                            @if(session()->has('message'))
-                                <div class="alert alert-success">
-                                    {{ session()->get('message') }}
-                                </div>
-                            @endif
-
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                            @include('dashboard.layout.messages')
+                            @include('dashboard.layout.errors')
 
                         @if(count($users) > 0)  
                         <div class="table-responsive table-desi">

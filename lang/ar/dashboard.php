@@ -38,6 +38,8 @@ return [
     'password' => 'كلمة المرور',
     'type' => 'النوع',
 
+    'description' => 'الوصف',
+
 
     'users'  => 'المستخدمين',
     'users_list'  => 'قائمة المستخدمين',

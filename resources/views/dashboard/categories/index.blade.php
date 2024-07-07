@@ -38,37 +38,56 @@
                             </form>
 
                             <button type="button" class="btn btn-primary mt-md-0 mt-2" data-bs-toggle="modal"
-                                data-original-title="test" data-bs-target="#exampleModal">إضافة قسم جديد</button>    
+                                data-original-title="test" data-bs-target="#categoryModalcreate">إضافة قسم جديد</button>    
                         </div>
 
                         <div class="card-body">
-                            @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+
+                        @include('dashboard.layout.messages')
+                        @include('dashboard.layout.errors')
 
                         <div class="table-responsive table-desi">
                             <table class="table all-package table-category " id="editableTable">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>الإسم</th>
-                                        <th>الصورة</th>
-                                        <th>القسم الرئيسي</th>
-                                        <th></th>
+                                        <th>الوصف</th>
+                                        {{-- <th>القسم الرئيسي</th> --}}
+                                        <th>التاريخ</th>
+                                        <th>الإجراء</th>
 
                                     </tr>
                                 </thead>
+                                @foreach ($categories as $category)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->description }}</td>
+                                    <td>{{ $category->created_at }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
+                                                data-original-title="test" data-bs-target="#categoryModaledit{{ $category->id }}"> <i class="fa fa-edit"></i>
+                                        </button> 
+                                        | 
+                                        <button type="button" class="btn btn-primary btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
+                                                data-original-title="test" data-bs-target="#categoryModaldelete{{ $category->id }}"> <i class="fa fa-cut"></i> 
+                                        </button>  
+                                    </td>
+                                </tr>
 
+                                @include('dashboard.categories.modals.edit')
+                                @include('dashboard.categories.modals.delete')
+                                
+                            @endforeach
                                 <tbody>
 
                                 </tbody>
                             </table>
                         </div>
+
+
+                        @include('dashboard.categories.modals.create')
 
 
 
@@ -82,107 +101,23 @@
 
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               
-                    <div class="modal-content">
-                        <form action="{{ route('dashboard.categories.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title f-w-600" id="exampleModalLabel">اضافة قسم جديد </h5>
-                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">×</span></button>
-                        </div>
-                        <div class="modal-body">
+       
 
-                            <div class="form">
-                                <div class="form-group">
-                                    <label for="validationCustom01" class="mb-1">الإسم :</label>
-                                    <input class="form-control" id="validationCustom01" type="text" name="name">
-                                </div>
 
-                               
-                                    
-                               
-                                <div class="form-group">
-                                    <label for="validationCustom01" class="mb-1">القسم الرئيسي </label>
-                                    <select name="parent_id" id="" class="form-control">
-                                        <option value="">قسم رئيسي</option>
-                                        @foreach ($mainCategories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                               
-                                <div class="form-group mb-0">
-                                    <label for="validationCustom02" class="mb-1">الصورة :</label>
-                                    <input class="form-control dropify" id="validationCustom02" type="file"
-                                        name="image">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-
-                    </div>
-                   
-            </div>
-        </div>
     </div>
 
     </div>
 
-
-
-
-
-    {{-- delete --}}
-    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="{{ Route('dashboard.categories.delete') }}" method="POST">
-                <div class="modal-content">
-
-                    <div class="modal-body">
-                        @csrf
-                        @method('DELETE')
-                        <div class="form-group">
-                            <p>متأكد من الحذف .. ؟؟</p>
-                            @csrf
-                            <input type="hidden" name="id" id="id">
-                        </div>
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">اغلاق</button>
-                        <button type="submit" class="btn btn-danger">حذف </button>
-                    </div>
-                </div>
-            </form>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    {{-- delete --}}
 @endsection
 
 
 @push('javascripts')
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(function() {
             var table = $('#editableTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ Route('dashboard.categories.getall') }}",
+                ajax: "{{ Route('categories.getall') }}",
                 columns: [
 
                     {
@@ -211,5 +146,5 @@
             console.log(id);
             $('#deletemodal #id').val(id);
         })
-    </script>
+    </script> --}}
 @endpush
