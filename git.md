@@ -19,11 +19,31 @@ git push -u origin main
 git status
 # check diffrent
  git diff
-# Make Branch
+
+# =====================
+# Make Branch 
+# Make copies of all the relevant files to avoid impacting the live version
 git branch Name
+ ## Flags 
+    (-d)
+  - git branch -d Name
+    Deleted branch Name 
+# show all Branches 
+git branch
 
 # move to branch
 git checkout Name
+
+# switch to new branch
+    (-b)
+    - git checkout -b Name
+    Switched to a new branchName 
+# Delete branch
+    (-d)
+    - git branch -d Name
+    Deleted branch branchName (was dfa79db).
+
+# ============== 
 
 # add files 
 git add .  | git add --all
