@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -32,6 +33,19 @@ class CategoryController extends Controller
        return redirect()->route('categories.index')->with('message',trans('dashboard.added'));
     }
 
+    public function show (string $id)
+    {
+        try {
+            $product_category = Category::where('id',$id)->value('name');
+            $categories = Category::all();
+            $products = Product::where('category_id',$id)->get();
+            return view('dashboard.categories.show',compact('products','categories','product_category'));
+       
+       } catch (\Exception $e) {
+           return $e->getMessage();
+       }
+
+    }
 
     public function update(Request $request)
     {

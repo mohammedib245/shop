@@ -55,7 +55,7 @@
 
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="product-review.html">
+                        <a href="{{ route('products.index') }}">
                             <i class="fa fa-circle"></i>
                             <span>{{ trans('dashboard.products_list') }}</span>
                         </a>

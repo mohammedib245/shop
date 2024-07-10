@@ -20,10 +20,15 @@ return [
 
     'no_data_avalibale' => 'لا توجد بيانات',
     'submit' => 'إرسال',
+    'show' => 'عرض',
     'save' => 'حفظ', 
     'update' => 'تحديث', 
     'delete' => 'حذف',
     'close' => 'إلغاء',
+    
+    'image' => 'الصورة',
+    'price' => 'السعر',
+    'stock' => 'المخزن',
 
 
     'success' => 'نجاح',

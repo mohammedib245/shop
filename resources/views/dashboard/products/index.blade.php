@@ -19,8 +19,8 @@
                                     <i data-feather="home"></i>
                                 </a>
                             </li>
-                            <li class="breadcrumb-item">Digital</li>
-                            <li class="breadcrumb-item active">Sub Category</li>
+                            <li class="breadcrumb-item">{{ trans('dashboard.dashboard') }}</li>
+                            <li class="breadcrumb-item active">{{ trans('dashboard.products') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -35,45 +35,69 @@
                     <div class="card">
                         <div class="card-header">
                             <form class="form-inline search-form search-box">
-
                             </form>
 
-                            <a class="btn btn-primary mt-md-0 mt-2" href="{{route('dashboard.products.create')}}">إضافة منتج جديد</a>
-                           
-
-
-
+                            <button type="button" class="btn btn-primary mt-md-0 mt-2" data-bs-toggle="modal"
+                                data-original-title="test" data-bs-target="#productModalcreate">إضافة منتج جديد</button>    
                         </div>
 
                         <div class="card-body">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            <div class="table-responsive table-desi">
-                                <table class="table all-package table-category " id="editableTable">
-                                    <thead>
-                                        <tr>
-                                            <th>الإسم</th>
-                                            <th>القسم </th>
-                                            <th>السعر الأساسي</th>
-                                            <th>التخفيض الأساسي</th>    
-                                            <th>الالوان</th>
-                                            <th></th>
 
-                                        </tr>
-                                    </thead>
+                        @include('dashboard.layout.messages')
+                        @include('dashboard.layout.errors')
 
-                                    <tbody>
+                        <div class="table-responsive table-desi">
+                            <table class="table all-package table-product " id="editableTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>الصورة</th>
+                                        <th>الإسم</th>
+                                        <th>القسم</th>
+                                        <th>الوصف</th>
+                                        <th>السعر</th>
+                                        {{-- <th>القسم الرئيسي</th> --}}
+                                        <th>التاريخ</th>
+                                        <th>الإجراء</th>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </tr>
+                                </thead>
+                                @foreach ($products as $product)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $product->image }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ Str::limit($product->description, 50) }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->created_at }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
+                                                data-original-title="test" data-bs-target="#productModaledit{{ $product->id }}"> <i class="fa fa-edit"></i>
+                                        </button> 
+                                        | 
+                                        <button type="button" class="btn btn-primary btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
+                                                data-original-title="test" data-bs-target="#productModaldelete{{ $product->id }}"> <i class="fa fa-cut"></i> 
+                                        </button>  
+                                    </td>
+                                </tr>
+
+                                @include('dashboard.products.modals.edit')
+                                @include('dashboard.products.modals.delete')
+                                
+                            @endforeach
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        @include('dashboard.products.modals.create')
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -83,56 +107,15 @@
 
 
 
+       
+
+
     </div>
+
     </div>
+
 @endsection
 
 
 @push('javascripts')
-    <script type="text/javascript">
-        $(function() {
-            var table = $('#editableTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ Route('dashboard.products.getall') }}",
-                columns: [
-
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'category',
-                        name: 'category'
-                    },
-                    {
-                        data: 'price',
-                        name: 'price'
-                    },
-                    {
-                        data: 'discount_price',
-                        name: 'discount_price'
-                    },
-                    {
-                        data: 'color',
-                        name: 'color'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                   
-                ]
-            });
-
-        });
-
-        $('#editableTable tbody').on('click', '#deleteBtn', function(argument) {
-            var id = $(this).attr("data-id");
-            console.log(id);
-            $('#deletemodal #id').val(id);
-        })
-    </script>
 @endpush

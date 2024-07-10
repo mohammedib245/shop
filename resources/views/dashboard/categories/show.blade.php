@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="page-header-left">
-                            <h3>أقسام المنتجات
+                            <h3> منتجات قسم {{ $product_category }}
                             </h3>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">Digital</li>
-                            <li class="breadcrumb-item active">Sub Category</li>
+                            <li class="breadcrumb-item active">Category products</li>
                         </ol>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                             </form>
 
                             <button type="button" class="btn btn-primary mt-md-0 mt-2" data-bs-toggle="modal"
-                                data-original-title="test" data-bs-target="#categoryModalcreate">إضافة قسم جديد</button>    
+                            data-original-title="test" data-bs-target="#productModalcreate">إضافة منتج جديد</button>   
                         </div>
 
                         <div class="card-body">
@@ -59,31 +59,28 @@
 
                                     </tr>
                                 </thead>
-                                @foreach ($categories as $category)
+                                @foreach ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ $category->description }}</td>
-                                    <td> 
-                                        <a href="{{ route('categories.show',["category"=> $category->id]) }}"
-                                            class="btn btn-success btn-sm mt-md-0 mt-2"
-                                            >{{ trans('dashboard.show') }}  <i class="fa fa-eye"></i> 
-                                        </a>
-                                        </td>
-                                        <td>{{ $category->created_at }}</td>
-                                        <td>
+                                    <td>{{ $product->image }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ Str::limit($product->description, 50) }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->created_at }}</td>
+                                    <td>
                                         <button type="button" class="btn btn-success btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
-                                                data-original-title="test" data-bs-target="#categoryModaledit{{ $category->id }}"> <i class="fa fa-edit"></i>
+                                                data-original-title="test" data-bs-target="#productModaledit{{ $product->id }}"> <i class="fa fa-edit"></i>
                                         </button> 
                                         | 
                                         <button type="button" class="btn btn-primary btn-sm mt-md-0 mt-2" data-bs-toggle="modal"
-                                                data-original-title="test" data-bs-target="#categoryModaldelete{{ $category->id }}"> <i class="fa fa-cut"></i> 
+                                                data-original-title="test" data-bs-target="#productModaldelete{{ $product->id }}"> <i class="fa fa-cut"></i> 
                                         </button>  
                                     </td>
                                 </tr>
 
-                                @include('dashboard.categories.modals.edit')
-                                @include('dashboard.categories.modals.delete')
+                                @include('dashboard.products.modals.edit')
+                                @include('dashboard.products.modals.delete')
                                 
                             @endforeach
                                 <tbody>
@@ -118,39 +115,5 @@
 
 
 @push('javascripts')
-    {{-- <script type="text/javascript">
-        $(function() {
-            var table = $('#editableTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ Route('categories.getall') }}",
-                columns: [
 
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'image',
-                        name: 'image'
-                    },
-                    {
-                        data: 'parent',
-                        name: 'parent'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                    }
-                ]
-            });
-
-        });
-
-        $('#editableTable tbody').on('click', '#deleteBtn', function(argument) {
-            var id = $(this).attr("data-id");
-            console.log(id);
-            $('#deletemodal #id').val(id);
-        })
-    </script> --}}
 @endpush
