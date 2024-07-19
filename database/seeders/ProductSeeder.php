@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +19,31 @@ class ProductSeeder extends Seeder
         DB::table('products')->delete();
 
         $products = [
-            'name' => 'T-shirt',
-            'description' => Str::random(40),
-            'price'  => 0.0,
-            'stock'  => 5,
-            'image'  => '',
-            'category_id' => Category::first()->id,
-            'created_at' => now(),
+            [
+                'name' => 'T-shirt',
+                'description' => Str::random(40),
+                'price'  => 0.0,
+                'discount'  => 0,
+                'stock'  => 5,
+                'image'  => '',
+                'category_id' => Category::first()->id,
+                'created_at' => now(),
+            ],
+            [
+                'name' => 'shoe',
+                'description' => Str::random(50),
+                'price'  => 0.0,
+                'discount'  => 0,
+                'stock'  => 5,
+                'image'  => '',
+                'category_id' => Category::first()->id,
+                'created_at' => now(),
+            ],
         ];
+
         
         DB::table('products')->insert($products);
+        
+        
     }
 }

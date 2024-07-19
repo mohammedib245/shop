@@ -39,11 +39,13 @@
                                 </div> --}}
 
                                
-                                {{-- <div class="form-group mb-0">
+                                <div class="form-group mb-0">
                                     <label for="validationCustom02" class="mb-1">الصورة :</label>
                                     <input class="form-control dropify" id="validationCustom02" type="file"
                                         name="image">
-                                </div> --}}
+                                </div>
+
+                                {{-- <input type="file" class="dropify" data-default-file="url_of_your_file" /> --}}
 
 
                             </div>

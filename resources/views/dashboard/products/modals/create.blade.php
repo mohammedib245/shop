@@ -36,8 +36,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="price" class="mb-1">{{ trans('dashboard.price') }} :</label>
+                                    <label for="price" class="mb-1 col-form-label">{{ trans('dashboard.price_mian') }} :</label>
                                     <input type="price" name="price"  class="form-control" id="price"  required />
+                                </div>
+
+                              
+
+                                <div class="form-group">
+                                    <label for="discount" class="col-form-label">
+                                        {{ trans('dashboard.discount_mian') }}  </label>
+                                    <input class="form-control" id="discount" type="text"
+                                        name="discount">
                                 </div>
 
                                 

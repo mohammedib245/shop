@@ -51,6 +51,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>الصورة</th>
                                         <th>الإسم</th>
                                         <th>الوصف</th>
                                         <th> المنتجات</th>
@@ -62,6 +63,14 @@
                                 @foreach ($categories as $category)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        @if($category->image)
+                                        <img src="{{ url($category->image) }}"
+                                        style="height: 100px; width: 150px;">
+                                        @else 
+                                            No Image
+                                        @endif 
+                                    </td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->description }}</td>
                                     <td> 

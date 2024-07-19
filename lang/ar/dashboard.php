@@ -26,9 +26,7 @@ return [
     'delete' => 'حذف',
     'close' => 'إلغاء',
     
-    'image' => 'الصورة',
-    'price' => 'السعر',
-    'stock' => 'المخزن',
+   
 
 
     'success' => 'نجاح',
@@ -73,6 +71,16 @@ return [
     'product_edit'  => 'تعديل منتج',
     'product_update'  => 'تحديث منتج',
     'product_delete'  => 'حذف منتج',
+
+    'image' => 'الصورة',
+    'price' => 'السعر',
+    'discount' => 'السعر',
+    'price_main' => ' السعر الأساسي للمنتج ',
+    'discount_main' => ' التخفيض الأساسي للمنتج ',
+    'stock' => 'المخزن',
+
+
+    
     
     'orders'  => 'الطلبات',
     'orders_list'  => 'قائمة الطلبات',

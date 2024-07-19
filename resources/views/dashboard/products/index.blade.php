@@ -54,9 +54,10 @@
                                         <th>الصورة</th>
                                         <th>الإسم</th>
                                         <th>القسم</th>
-                                        <th>الوصف</th>
-                                        <th>السعر</th>
                                         {{-- <th>القسم الرئيسي</th> --}}
+                                        <th>الوصف</th>
+                                        <th>{{ trans('dashboard.price_main') }}</th>
+                                        <th>{{ trans('dashboard.discount_main') }}</th>
                                         <th>التاريخ</th>
                                         <th>الإجراء</th>
 
@@ -65,11 +66,19 @@
                                 @foreach ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->image }}</td>
+                                    <td>
+                                        @if($product->image)
+                                        <img src="{{ url($product->image) }}"
+                                        style="height: 100px; width: 150px;">
+                                        @else 
+                                            No Image
+                                        @endif 
+                                    </td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ Str::limit($product->description, 50) }}</td>
                                     <td>{{ $product->price }}</td>
+                                    <td>{{ $product->discount }}</td>
                                     <td>{{ $product->created_at }}</td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm mt-md-0 mt-2" data-bs-toggle="modal"

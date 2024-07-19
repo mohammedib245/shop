@@ -15,11 +15,9 @@
     <title>Dashboard - shop </title>
 
     <!-- Google font-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap">
+    {{-- <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap"> --}}
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"> --}}
 
 
     <!-- Font Awesome-->
@@ -43,7 +41,7 @@
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/dashboard')}}/assets/css/style.css">
 
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('assets/dashboard')}}/dropify.css"> --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/dashboard')}}/dropify.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="{{ asset('assets/dashboard') }}/select2.min.css">
@@ -303,7 +301,7 @@
     <script src="{{asset('assets/dashboard')}}/assets/js/admin-script.js"></script>
 
 
-    {{-- <script src="{{asset('assets/dashboard')}}/dropify.js"></script> --}}
+    <script src="{{asset('assets/dashboard')}}/dropify.js"></script>
 
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -311,9 +309,9 @@
     <script src="{{ asset('assets/dashboard') }}/select2.min.js"></script>
 
 
-    {{-- <script>
+    <script>
         $('.dropify').dropify();
-    </script> --}}
+    </script>
 
 
     @stack('javascripts')

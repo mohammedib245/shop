@@ -8,7 +8,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="{{ route('products.update','test') }}" method="post">
+            <form action="{{ route('products.update','test') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="modal-body">
@@ -37,9 +37,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="price" class="mb-1">{{ trans('dashboard.price') }} :</label>
+                    <label for="price" class="mb-1">{{ trans('dashboard.price_main') }} :</label>
                     <input type="price" name="price"  class="form-control" id="price"  value="{{ $product->price }}" required />
                 </div>
+
+                <div class="form-group">
+                  <label for="price" class="mb-1">{{ trans('dashboard.discount_main') }} :</label>
+                  <input type="price" name="discount"  class="form-control" id="discount"  value="{{ $product->discount }}" required />
+              </div>
 
                 
                 <div class="form-group">
@@ -47,10 +52,26 @@
                     <input type="stock" name="stock"  class="form-control" id="stock" value="{{ $product->stock }}"  required />
                 </div>
                
-                <div class="form-group mb-0">
+                {{-- <div class="form-group mb-0">
                     <label for="validationCustom02" class="mb-1">{{ trans('dashboard.image') }} :</label>
                     <input class="form-control dropify" id="validationCustom02" type="file"
                         name="image">
+                </div> --}}
+
+                <div class="mb-3">
+                  <label for="image" class="mb-1">الصورة :</label>
+                  @if($product->image)
+                  <img src="{{ url($product->image) }}"
+                  style="height: 100px; width: 150px;">
+                  @else 
+                  No Image
+                  @endif 
+                  <input class="form-control" id="image" type="file"  name="image"  required 
+                        {{-- data-show-loader="false"  --}}
+                        {{-- data-allowed-file-extensions="jpg png jpeg gif" --}}
+                          >
+                  {{-- data-default-file="{{ url($category->image) }}" --}}
+                  {{-- dropify --}}
                 </div>
 
               

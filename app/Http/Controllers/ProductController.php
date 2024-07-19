@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\File;
+
 class ProductController extends Controller
 {
      // Construst deny to use users[create,show,edit]
@@ -18,16 +20,27 @@ class ProductController extends Controller
 
      public function store(Request $request)
      {
-         $products = $request->validate([
+         $product = $request->validate([
              'name'          => 'required|string|max:255|unique:products,name',
              'description'   => 'sometimes|nullable|string',
-             'price'         => 'integer',
+             'price'         => 'numeric',
+             'dicount'         => 'integer',
              'stock'         => 'integer',
              'category_id'   =>  'required',
             ]);
  
+        
          try {
-             Product::create($products);
+
+            if($request->file('image')){
+                $file= $request->file('image');
+                $path = "public\uploads\products\\";
+                $filename= $path . date('YmdHi'). '.'.$file->getClientOriginalExtension();
+                $file->move(public_path('public\uploads\products\\'), $filename);
+                $product['image']= $filename;
+            }
+
+             Product::create($product);
         
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -42,13 +55,33 @@ class ProductController extends Controller
          $products = $request->validate([
              'name'          => "required|string|max:255|unique:products,name,$request->id",
              'description'   => 'sometimes|nullable|string',
-             'price'         => 'integer',
+             'price'         => 'numeric',
+             'discount'         => 'integer',
              'stock'         => 'integer',
              'category_id'   =>  'required',
          ]);
  
          try {
-             $product = Product::findorfail($request->id);
+            $product = Product::findorfail($request->id);
+
+            if(request()->hasFile('image') && request('image') != ''){
+
+                // check and remove old image
+                if(!empty($product->image)){
+                    $imagePath = public_path($product->image);
+                    if(File::exists($imagePath)){
+                        unlink($product->image);
+                    }
+                }
+  
+                  $file= $request->file('image');
+                  $path = "public\uploads\products\\";
+                  $filename= $path . date('YmdHi'). '.'.$file->getClientOriginalExtension();
+                  $file->move(public_path($path), $filename);
+                  $product['image']= $filename;
+              }
+
+            
              $product->update($products);
         
         } catch (\Exception $e) {

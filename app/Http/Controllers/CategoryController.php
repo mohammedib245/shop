@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -21,9 +22,20 @@ class CategoryController extends Controller
         $categories = $request->validate([
             'name'          => 'required|string|max:255|unique:categories,name',
             'description'   => 'sometimes|nullable|string',
+            'image'         => 'sometimes|nullable|image',
         ]);
-
+        
         try {
+        
+        if($request->file('image')){
+            $file= $request->file('image');
+            $path = "public\uploads\\";
+            $path = "public\uploads\\";
+            $filename= $path . date('YmdHi'). '.'.$file->getClientOriginalExtension();
+            $file->move(public_path('public\uploads\\'), $filename);
+            $categories['image']= $filename;
+        }
+
             Category::create($categories);
        
        } catch (\Exception $e) {
@@ -52,11 +64,41 @@ class CategoryController extends Controller
         $categories = $request->validate([
             'name'          => "required|string|max:255|unique:categories,name,$request->id",
             'description'   => 'sometimes|nullable|string',
+            'image'         => 'required|nullable',
         ]);
 
+
         try {
-            $category = Category::findorfail($request->id);
-            $category->update($categories);
+
+        $category = Category::findorfail($request->id);
+
+          if(request()->hasFile('image') && request('image') != ''){
+
+              // check and remove old image
+            if(!empty($category->image)){
+              $imagePath = public_path($category->image);
+              if(File::exists($imagePath)){
+                unlink($category->image);
+              }
+            }
+
+                $file= $request->file('image');
+                $path = "public\uploads\\";
+                $filename= $path . date('YmdHi'). '.'.$file->getClientOriginalExtension();
+                $file->move(public_path('public\uploads\\'), $filename);
+                $categories['image']= $filename;
+            }
+              
+        $category->update($categories);
+
+
+              
+
+        // $file_path = storage_path().'/app/'.$doc['doc_file'];/
+        //You can also check existance of the file in storage.
+        // if(Storage::exists($file_path)) {}         
+        
+                  
        
        } catch (\Exception $e) {
            return $e->getMessage();
